@@ -1,50 +1,28 @@
 <!DOCTYPE html>
-<html lang='ru'>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
     <head>
-      <meta charset='utf-8' />
-      <title> Резюме</title>  
-	  <link href="style.css" rel="stylesheet">
+        <title>Game Life</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <script src="js.js" defer></script>
+            
     </head>
     <body>
-	<div class='header'>
-		<h1> Владимир Костенко</h1>
-		<h3>Веб разработчик</h3>
-		<p>
-			<a href='https://vk.com/id137162837'> vk.com/id137162837</a>,
-			<a href='kost.vova@mail.ru'>kost.vova@mail.ru </a>
-		</p>	
-	</div>
-	<div class='main'>
-		<p>
-			Я увлекаюсь программированием с 14 лет. Начал я с паскаля. Писал на нем игры в консоле. А также графические игры в рижиме BGI. В 17 лет перешел на С++ на нем создал несколько игр в графическом режиме. Веб программированием увлекся в 21 год и создал на сегоднейший день сайт на, который выложил ранее деланные мной игры. Так же я проходил практику в веб студии, которую я закончил с успешно выполнеными данными мне заданиями.
-		</p>
-		<h2> Опыт работы </h2>
-		<h3> Сумма Технологий</h3>
-		<p>
-			Программист (учебная практика).<i> июнь 2018 — июль 2018.</i>
-	    </p>
-		<ul>
-			<li>Разработка скриптов, для внутренего использования</li>
-			<li>Работа с базами данных MySQL</li>
-		</ul>
-		
-		<h2>Образование</h2>
-		<h3> Уральский радио-технический колледж им. Попова</h3>
-		<p>
-			Програмирование в информационных системах. Заочное отделение 5 полных курсов. На данный момент нахожусь в академическом отпуске.
-		</p>
-		<h2> Другие навыки и увлечения</h2>
-		<ul>
-		  <li> Электроника </li>
-		  <li> Шахматы</li>
-		</ul>
-	</div>
-	
-	<div class='footer'>
-		<p><b> Костенко Владимир</b></p>
-		<p> пр. Победы, 44, Каменск-Уральский, Россия, +79090067149, 
-		<a href='kost.vova@mail.ru'>kost.vova@mail.ru</a>
-		</p>
-	</div>
-    </body>
+        <h1>Игра в жизнь</h1>
+        <p id="titleP">Раставьте первоначальное расположение.</p>
+            
+        <canvas id="c1" width="300" height="300"></canvas>
+        <div id="panel">
+            <p>Количество циклов: <span id="count">0</span></p>
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+            <button id="clear">clear</button>
+        </div>
+        </body>
 </html>
