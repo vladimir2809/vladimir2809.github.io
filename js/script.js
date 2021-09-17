@@ -65,6 +65,8 @@ levelWidth=[640,800,800,1000,1000,640,640,1200,1600,1200];
 levelHeight=[640,800,800,1000,1000,640,640,1200,1600,1200];
 var countWall=0;
 var countTail=0;
+import bridge from '@vkontakte/vk-bridge';
+bridge.send("KWebAppInit", {})
 function preload(){
     setLevelOption(level);
     game.world.setBounds(0,0,mapWidth,mapHeight);
@@ -77,6 +79,7 @@ function preload(){
     game.load.image("wall",'img/wall.png');
     game.load.image("tail",'img/tail.png');
     game.load.image("food",'img/food.png');
+    ;
 }
 function create(){
    // arrWall.delete();
@@ -411,6 +414,10 @@ function restartContinue(unarLives=true){
         endGameText.x=game.camera.x+140;
         endGameText.y=game.camera.y+120;
         gameOver=true;
+        bridge.send("VKWebAppShowWallPostBox", {
+                "message": "Hello!",
+                "attachments": "https://habr.com"
+              });
         setTimeout(function (){
             newGame = confirm("Начать новую игру?");
             
