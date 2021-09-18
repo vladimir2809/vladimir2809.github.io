@@ -54,16 +54,17 @@ var gameOver=false;// куонец игры
 var quantityWall=700;//// количество стен
 var quantityFood=125;// количество еды на карте
 var leftFood=2;// количество еды, которое нужно сьесть
-var live=3;// жизни
+var live=1;// жизни
 var level=1;// уровень
-var maxLevel=10;
-var countStartGame=4;
+var maxLevel=1/*0*/;
+var maxCountStart=4;
+var countStartGame=maxCountStart;
 var newGame=false;
 var vkData=null;
 var interval=null;
 arrLevelWall=[100,120,120,120,120,320,480,200,200,1000];
 arrLevelFood=[25,30,30,50,60,10,25,10,5,5];
-arrLevelLeftFood=[10,12,15,25,30,5,8,10,5,8];
+arrLevelLeftFood=[1/*0*/,12,15,25,30,5,8,10,5,8];
 levelWidth=[640,800,800,1000,1000,640,640,1200,1600,1200];
 levelHeight=[640,800,800,1000,1000,640,640,1200,1600,1200];
 var countWall=0;
@@ -95,9 +96,17 @@ function create(){
     initWall();// создаем стены
     initFood();// создаем еду
     // создаем спрайт головы
+    
     header=game.add.sprite((mapWidth/2)-size,Math.trunc(mapHeight/2)-size,'header');
     
     game.physics.enable(header,Phaser.Physics.ARCADE);// подключаем физику голове
+    document.addEventListener('keydown', function(event) {
+        if (event.key == 'F2' )
+        {
+            startNewGame();
+        }
+        console.log(event.key);
+    });
     //game.camera.focusOnXY(30*20,30*20);;
     // обьевлеяем переменный для клавиатуры
     cursors = game.input.keyboard.createCursorKeys();
@@ -249,10 +258,15 @@ function update(){
             {
                if (level>=maxLevel)
                {
-                   gameOver=true;
-                   endGameText.x=game.camera.x+97;
-                   endGameText.y=game.camera.y+120;
-                   endGameText.setText("ВЫ ПОБЕДИЛИ!!!");
+                    gameOver=true;
+                    endGameText.x=game.camera.x+97;
+                    endGameText.y=game.camera.y+120;
+                    F2Text.x=game.camera.x+150;
+                    F2Text.y=game.camera.y+160;
+                    endGameText.setText("ВЫ ПОБЕДИЛИ!!!");
+                    vkBridge.send("VKWebAppShowWallPostBox", {
+                        "message": "Я победил в игре Snake Free, пройдя уровень 10. Сможешь также?",
+                    });
 
 
 
@@ -270,11 +284,13 @@ function update(){
                 flagNewTail=true;   // флаг соззадания нового хвостика змейки
             }
 
-          });
-    gestMouse=gestureMouse();
+    });
+    gestMouse=gestureMouse(); 
+  
    // console.log(gestMouse);
     if (changeDirection==false)// если флаг измение движения ложь
     {
+
         // измение напрвлавлеия движения змейки
         if ((cursors.up.isDown||gestMouse==1)&&direction!=3)
         {
@@ -326,15 +342,15 @@ function update(){
         }
         
     }
-    interval =setInterval((e)=>{
-       if (vkData!=null)
-       {
-           newGame = confirm("Начать новую игру?");
-           vkData=null;
-           clearInterval(interval);
-       }
-      console.log(vkData);
-   },100);
+//    interval =setInterval((e)=>{
+//       if (vkData!=null)
+//       {
+//           newGame = confirm("Начать новую игру?");
+//           vkData=null;
+//           clearInterval(interval);
+//       }
+//      console.log(vkData);
+//   },100);
     var zoomAmount=1;
     
     game.camera.scale.x= zoomAmount;
@@ -362,6 +378,8 @@ function update(){
     {
         endGameText.x=game.camera.x-140;
         endGameText.y=game.camera.y-120;
+        F2Text.x=game.camera.x-140;
+        F2Text.y=game.camera.y-120;
         // console.log("hed der="+direction);
         // console.log("x= "+(header.x));
         // console.log("y= "+(header.y));
@@ -417,33 +435,33 @@ function restartContinue(unarLives=true){
     if (unarLives==true){
         live--;
     }
-    countStartGame=4;
+    countStartGame=maxCountStart;
     countSpeed=1;
     if (live<=0)
     {
         endGameText.x=game.camera.x+90;
         endGameText.y=game.camera.y+120;
+        F2Text.x=game.camera.x+150;
+        F2Text.y=game.camera.y+160;
         gameOver=true;
         if (level>0)
         {
             vkBridge.send("VKWebAppShowWallPostBox", {
                 "message": "Я дошел до уровня: "+level+". В игре Snake Free. Сможешь также?",
               });
-            vkBridge.subscribe((e) => {
-                if(e.type == "VKWebAppShowWallPostBoxResult") {
-                    console.log(e.data.status);
-                    vkData=e.data.status;
-                }
-            });
-            vkBridge.subscribe((e) => {
-                if(e.type == "VKWebAppShowWallPostBoxFailed") {
-                    console.log(e.data.status);
-                    vkData=e.data.status;
-                   
-                }
-            
-            
-            });
+//            vkBridge.subscribe((e) => {
+//                if(e.type == "VKWebAppShowWallPostBoxResult") {
+//                    console.log(e.data.status);
+//                   // vkData=e.data.status;
+//                }
+//            });
+//            vkBridge.subscribe((e) => {
+//                if(e.type == "VKWebAppShowWallPostBoxFailed") {
+//                    console.log(e.data.status);
+//                   // vkData=e.data.status;
+//                   
+//                
+        // });
    
             
         }
@@ -478,6 +496,7 @@ function startNewGame()
         destroyCreateText();
         level=1;
         live=3;
+        countStartGame=maxCountStart;
         gameOver=false;
         vkData=null;
 }
@@ -524,6 +543,8 @@ function destroyCreateText()
     foodText.destroy();
     levelText.destroy();
     goText.destroy();
+    F2Text.destroy();
+    
     createText();
 }
 function createText()
@@ -534,6 +555,7 @@ function createText()
     foodText=game.add.text(game.camera.x+200,game.camera.y+5,"Осталось съесть: "+leftFood,{font: "14px Arial",fill:"#0095DD"});
     levelText=game.add.text(game.camera.x+5,game.camera.y+5,"УРОВЕНЬ: "+level,{font: "14px Arial",fill:"#0095DD"});    
     goText=game.add.text(game.camera.x+247,game.camera.y+120,"3",{font: "18px Arial",fill:"#0095DD"}); 
+    F2Text=game.add.text(game.camera.x+247,game.camera.y+120,"F2-Новая игра",{font: "24px Arial",fill:"#DD9500"}); 
 }
 // инициализация стен
 function initWall(){
