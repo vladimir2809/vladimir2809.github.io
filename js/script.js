@@ -59,6 +59,7 @@ var level=1;// уровень
 var maxLevel=10;
 var countStartGame=4;
 var newGame=false;
+var vkData=null;
 arrLevelWall=[100,120,120,120,120,320,480,200,200,1000];
 arrLevelFood=[25,30,30,50,60,10,25,10,5,5];
 arrLevelLeftFood=[10,12,15,25,30,5,8,10,5,8];
@@ -421,19 +422,25 @@ function restartContinue(unarLives=true){
             vkBridge.subscribe((e) => {
                 if(e.type == "VKWebAppShowWallPostBoxResult") {
                     console.log(e.data.status);
-                 
+                    vkData=e.data.status;
                 }
             });
             vkBridge.subscribe((e) => {
                 if(e.type == "VKWebAppShowWallPostBoxFailed") {
                     console.log(e.data.status);
+                    vkData=e.data.status;
                    
                 }
             
             
             });
-            setTimeout(function (){
-                newGame = confirm("Начать новую игру?");
+            var interval=setInterval(function (){
+                if (vkData!=null)
+                {
+                    newGame = confirm("Начать новую игру?");
+                    vkData=null;
+                    clearInterval(interval);
+                }
             },100);
         }
 
@@ -468,6 +475,7 @@ function startNewGame()
         level=1;
         live=3;
         gameOver=false;
+        vkData=null;
 }
 function setLevelOption(lvl)
 {
