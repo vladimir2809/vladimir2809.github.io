@@ -496,6 +496,7 @@ function startNewGame()
         destroyCreateText();
         level=1;
         live=3;
+        setLevelOption(level);
         countStartGame=maxCountStart;
         gameOver=false;
         vkData=null;
