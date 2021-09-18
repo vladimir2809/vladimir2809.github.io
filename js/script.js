@@ -421,17 +421,17 @@ function restartContinue(unarLives=true){
             vkBridge.subscribe((e) => {
                 if(e.type == "VKWebAppShowWallPostBoxResult") {
                     console.log(e.data.status);
-                    setTimeout(function (){
+                 //   setTimeout(function (){
                         newGame = confirm("Начать новую игру?");
-                    },100);
+                  //  },100);
                 }
             });
             vkBridge.subscribe((e) => {
                 if(e.type == "VKWebAppShowWallPostBoxFailed") {
                     console.log(e.data.status);
-                    setTimeout(function (){
+                  //  setTimeout(function (){
                         newGame = confirm("Начать новую игру?");
-                    },100);
+                    //},100);
                 }
             
             
