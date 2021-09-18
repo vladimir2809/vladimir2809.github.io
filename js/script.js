@@ -122,9 +122,9 @@ function update(){
     {
         if (countStartGame<1&&countStartGame>0)
         {
-           goText.x=game.camera.x+235;
+           goText.x=game.camera.x+218;
            goText.y=game.camera.y+120;
-           goText.setText("GO!"); 
+           goText.setText("Вперед!"); 
         }else
         {
             goText.x=game.camera.x+247;
@@ -248,9 +248,9 @@ function update(){
                if (level>=maxLevel)
                {
                    gameOver=true;
-                   endGameText.x=game.camera.x+160;
+                   endGameText.x=game.camera.x+97;
                    endGameText.y=game.camera.y+120;
-                   endGameText.setText("YOU WIN!!!");
+                   endGameText.setText("ВЫ ПОБЕДИЛИ!!!");
 
 
 
@@ -340,13 +340,13 @@ function update(){
     // вывод текстов
     liveText.x=game.camera.x+5;
     liveText.y=game.camera.y+305;
-    liveText.setText('Lives: '+live);
-    foodText.x=game.camera.x+380;
+    liveText.setText('Жизней: '+live);
+    foodText.x=game.camera.x+330;
     foodText.y=game.camera.y+5;
-    foodText.setText('Left to eat: '+leftFood);
+    foodText.setText('Осталось съесть: '+leftFood);
     levelText.x=game.camera.x+5;
     levelText.y=game.camera.y+5;
-    levelText.setText('Level: '+level);
+    levelText.setText('Уровень: '+level);
    if (gameOver==false) //спрятать текст GAME OVER
     {
         endGameText.x=game.camera.x-140;
@@ -410,17 +410,25 @@ function restartContinue(unarLives=true){
     countSpeed=1;
     if (live<=0)
     {
-        endGameText.x=game.camera.x+140;
+        endGameText.x=game.camera.x+90;
         endGameText.y=game.camera.y+120;
         gameOver=true;
-        vkBridge.send("VKWebAppShowWallPostBox", {
-                "message": "Hello!",
-                "attachments": "https://habr.com"
+        if (level>0)
+        {
+            vkBridge.send("VKWebAppShowWallPostBox", {
+                "message": "Я дошел до уровня: "+level+". В игре Snake Free. Сможешь также?",
               });
-        setTimeout(function (){
-            newGame = confirm("Начать новую игру?");
+            vkBridge.subscribe((e) => {
+                if(e.type == "VKWebAppShowWallPostBoxResult") {
+                    console.log(e.data.status);
+                }
             
-        });
+            
+            });
+        }
+//        setTimeout(function (){
+//            newGame = confirm("Начать новую игру?");
+//        });
  
     }
     else
@@ -500,11 +508,11 @@ function destroyCreateText()
 }
 function createText()
 {
-    liveText=game.add.text(game.camera.x+5,game.camera.y+5,"Lives: 3",{font: "14px Arial",fill:"#44ff44"});
-    endGameText=game.add.text(game.camera.x+140,game.camera.y+120,"GAME OVER",{font: "34px Arial",fill:"#ff5555"});
-    levelCompleteText=game.add.text(game.camera.x+90,game.camera.y+120,"LEVEL COMPLETE ",{font: "34px Arial",fill:"#0095DD"});
-    foodText=game.add.text(game.camera.x+200,game.camera.y+5,"Left to eat: "+leftFood,{font: "14px Arial",fill:"#0095DD"});
-    levelText=game.add.text(game.camera.x+5,game.camera.y+5,"Level: "+level,{font: "14px Arial",fill:"#0095DD"});    
+    liveText=game.add.text(game.camera.x+5,game.camera.y+5,"Жизней: 3",{font: "14px Arial",fill:"#44ff44"});
+    endGameText=game.add.text(game.camera.x+140,game.camera.y+120,"ИГРА ОКОНЧЕНА",{font: "34px Arial",fill:"#ff5555"});
+    levelCompleteText=game.add.text(game.camera.x+90,game.camera.y+120,"УРОВЕНЬ ПРОЙДЕН ",{font: "34px Arial",fill:"#0095DD"});
+    foodText=game.add.text(game.camera.x+200,game.camera.y+5,"Осталось съесть: "+leftFood,{font: "14px Arial",fill:"#0095DD"});
+    levelText=game.add.text(game.camera.x+5,game.camera.y+5,"УРОВЕНЬ: "+level,{font: "14px Arial",fill:"#0095DD"});    
     goText=game.add.text(game.camera.x+247,game.camera.y+120,"3",{font: "18px Arial",fill:"#0095DD"}); 
 }
 // инициализация стен
