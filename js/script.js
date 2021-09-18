@@ -60,6 +60,7 @@ var maxLevel=10;
 var countStartGame=4;
 var newGame=false;
 var vkData=null;
+var interval=null;
 arrLevelWall=[100,120,120,120,120,320,480,200,200,1000];
 arrLevelFood=[25,30,30,50,60,10,25,10,5,5];
 arrLevelLeftFood=[10,12,15,25,30,5,8,10,5,8];
@@ -325,6 +326,15 @@ function update(){
         }
         
     }
+    interval =setInterval((e)=>{
+       if (vkData!=null)
+       {
+           newGame = confirm("Начать новую игру?");
+           vkData=null;
+           clearInterval(interval);
+       }
+      console.log(vkData);
+   },100);
     var zoomAmount=1;
     
     game.camera.scale.x= zoomAmount;
@@ -434,15 +444,7 @@ function restartContinue(unarLives=true){
             
             
             });
-            var interval=setInterval(function (){
-                if (vkData!=null)
-                {
-                    newGame = confirm("Начать новую игру?");
-                    vkData=null;
-                    clearInterval(interval);
-                }
-                console.log(vkData);
-            },100);
+   
             
         }
 
