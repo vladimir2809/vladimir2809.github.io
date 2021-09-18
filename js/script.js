@@ -387,7 +387,7 @@ function update(){
     }
     if (flagLevelComplete==true) //спрятать текст GAME OVER
     {
-       levelCompleteText.x=game.camera.x+100;
+       levelCompleteText.x=game.camera.x+70;
        levelCompleteText.y=game.camera.y+120;
     }
     else
