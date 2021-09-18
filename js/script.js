@@ -422,6 +422,11 @@ function restartContinue(unarLives=true){
                 if(e.type == "VKWebAppShowWallPostBoxResult") {
                     console.log(e.data.status);
                 }
+            });
+            vkBridge.subscribe((e) => {
+                if(e.type == "VKWebAppShowWallPostBoxFailed") {
+                    console.log(e.data.status);
+                }
             
             
             });
