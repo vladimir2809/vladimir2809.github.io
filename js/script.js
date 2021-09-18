@@ -54,9 +54,9 @@ var gameOver=false;// куонец игры
 var quantityWall=700;//// количество стен
 var quantityFood=125;// количество еды на карте
 var leftFood=2;// количество еды, которое нужно сьесть
-var live=1;// жизни
+var live=3;// жизни
 var level=1;// уровень
-var maxLevel=1/*0*/;
+var maxLevel=10;
 var maxCountStart=4;
 var countStartGame=maxCountStart;
 var newGame=false;
@@ -64,7 +64,7 @@ var vkData=null;
 var interval=null;
 arrLevelWall=[100,120,120,120,120,320,480,200,200,1000];
 arrLevelFood=[25,30,30,50,60,10,25,10,5,5];
-arrLevelLeftFood=[1/*0*/,12,15,25,30,5,8,10,5,8];
+arrLevelLeftFood=[10,12,15,25,30,5,8,10,5,8];
 levelWidth=[640,800,800,1000,1000,640,640,1200,1600,1200];
 levelHeight=[640,800,800,1000,1000,640,640,1200,1600,1200];
 var countWall=0;
@@ -444,7 +444,7 @@ function restartContinue(unarLives=true){
         F2Text.x=game.camera.x+150;
         F2Text.y=game.camera.y+160;
         gameOver=true;
-        if (level>0)
+        if (level>1)
         {
             vkBridge.send("VKWebAppShowWallPostBox", {
                 "message": "Я дошел до уровня: "+level+". В игре Snake Free. Сможешь также?",
