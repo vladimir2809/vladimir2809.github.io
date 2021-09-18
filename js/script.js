@@ -441,7 +441,9 @@ function restartContinue(unarLives=true){
                     vkData=null;
                     clearInterval(interval);
                 }
+                console.log(vkData);
             },100);
+            
         }
 
  
